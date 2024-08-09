@@ -24,7 +24,13 @@ func TestIPInfoIOFetcher(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(mockResponse))
+		n, err := w.Write([]byte(mockResponse))
+		if err != nil {
+			t.Fatalf("failed to write response: %v", err)
+		}
+		if n != len(mockResponse) {
+			t.Fatalf("unexpected number of bytes written: expected %d, got %d", len(mockResponse), n)
+		}
 	}))
 	defer server.Close()
 
