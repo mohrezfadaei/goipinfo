@@ -50,9 +50,9 @@ func (f *IPAPIFetcher) Fetch(ip string) (*IPInfo, error) {
 	return &IPInfo{
 		IP:       info.Query,
 		City:     info.City,
-		Region:   info.Region,
+		Region:   info.RegionName,
 		Country:  info.Country,
-		Location: fmt.Sprintf("%f,%f", info.Lat, info.Lon),
+		Location: fmt.Sprintf("%.4f,%.4f", info.Lat, info.Lon),
 		Org:      info.Org,
 		Timezone: info.Timezone,
 	}, nil
