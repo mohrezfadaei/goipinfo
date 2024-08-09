@@ -44,7 +44,7 @@ func (f *MyIPFetcher) Fetch(ip string) (*IPInfo, error) {
 		} `json:"location"`
 		Timezone string `json:"timeZone"`
 		ASN      struct {
-			Number  string `json:"number"`
+			Number  string `json:"int"`
 			Name    string `json:"name"`
 			Network string `json:"network"`
 		} `json:"asn"`
@@ -58,7 +58,7 @@ func (f *MyIPFetcher) Fetch(ip string) (*IPInfo, error) {
 		City:     info.City,
 		Region:   info.Region,
 		Country:  info.Country.Name,
-		Location: fmt.Sprintf("%f,%f", info.Location.Lat, info.Location.Lon),
+		Location: fmt.Sprintf("%.4f,%.4f", info.Location.Lat, info.Location.Lon),
 		Org:      info.ASN.Name,
 		Timezone: info.Timezone,
 	}, nil
