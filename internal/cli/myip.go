@@ -35,7 +35,13 @@ var MyipCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		fmt.Printf("IP information: %+v\n", fetcher)
+		info, err := fetcher.Fetch("")
+		if err != nil {
+			fmt.Println("Error fetching IP information: ", err)
+			os.Exit(1)
+		}
+
+		fmt.Printf("IP information: %+v\n", info)
 	},
 }
 

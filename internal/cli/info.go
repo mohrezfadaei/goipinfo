@@ -38,5 +38,5 @@ var InfoCmd = &cobra.Command{
 }
 
 func init() {
-	InfoCmd.Flags().StringVarP(&ipAddr, "ipaddr", "ip", "", "IP address to fetch information for")
+	InfoCmd.Flags().StringVar(&ipAddr, "ip", "", "IP address to fetch information for")
 }
