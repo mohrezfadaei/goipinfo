@@ -35,6 +35,7 @@ func (f *IPInfoIOFetcher) Fetch(ip string) (*IPInfo, error) {
 		Country  string `json:"country"`
 		Location string `json:"loc"`
 		Org      string `json:"org"`
+		Postal   string `json:"postal"`
 		Timezone string `json:"timezone"`
 	}
 	if err := json.NewDecoder(resp.Body).Decode(&info); err != nil {

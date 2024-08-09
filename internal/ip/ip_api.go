@@ -29,27 +29,30 @@ func (f *IPAPIFetcher) Fetch(ip string) (*IPInfo, error) {
 	}
 
 	var info struct {
-		IP       string `json:"query"`
-		City     string `json:"city"`
-		Region   string `json:"regionName"`
-		Country  string `json:"country"`
-		Location struct {
-			Lat float64 `json:"lat"`
-			Lon float64 `json:"lon"`
-		}
-		Org      string `json:"org"`
-		Timezone string `json:"timezone"`
+		Status      string  `json:"status"`
+		Country     string  `json:"country"`
+		CountryCode string  `json:"countryCode"`
+		Region      string  `json:"region"`
+		RegionName  string  `json:"regionName"`
+		City        string  `json:"city"`
+		Zip         string  `json:"zip"`
+		Lat         float64 `json:"lat"`
+		Lon         float64 `json:"lon"`
+		Timezone    string  `json:"timezone"`
+		Org         string  `json:"org"`
+		As          string  `json:"as"`
+		Query       string  `json:"query"` // IP
 	}
 	if err := json.NewDecoder(resp.Body).Decode(&info); err != nil {
 		return nil, fmt.Errorf("failed to decode response: %w", err)
 	}
 
 	return &IPInfo{
-		IP:       info.IP,
+		IP:       info.Query,
 		City:     info.City,
 		Region:   info.Region,
 		Country:  info.Country,
-		Location: fmt.Sprintf("%f,%f", info.Location.Lat, info.Location.Lon),
+		Location: fmt.Sprintf("%f,%f", info.Lat, info.Lon),
 		Org:      info.Org,
 		Timezone: info.Timezone,
 	}, nil

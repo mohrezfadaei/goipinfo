@@ -29,23 +29,25 @@ func (f *MyIPFetcher) Fetch(ip string) (*IPInfo, error) {
 	}
 
 	var info struct {
+		Success bool   `json:"success"`
 		IP      string `json:"ip"`
-		City    string `json:"city"`
-		Region  string `json:"region"`
+		Type    string `json:"type"`
 		Country struct {
 			Code string `json:"code"`
 			Name string `json:"name"`
 		} `json:"country"`
+		Region   string `json:"region"`
+		City     string `json:"city"`
 		Location struct {
 			Lat float64 `json:"lat"`
 			Lon float64 `json:"lon"`
 		} `json:"location"`
-		Org struct {
+		Timezone string `json:"timeZone"`
+		ASN      struct {
 			Number  string `json:"number"`
 			Name    string `json:"name"`
 			Network string `json:"network"`
 		} `json:"asn"`
-		Timezone string `json:"timeZone"`
 	}
 	if err := json.NewDecoder(resp.Body).Decode(&info); err != nil {
 		return nil, fmt.Errorf("failed to decode response: %w", err)
@@ -57,7 +59,7 @@ func (f *MyIPFetcher) Fetch(ip string) (*IPInfo, error) {
 		Region:   info.Region,
 		Country:  info.Country.Name,
 		Location: fmt.Sprintf("%f,%f", info.Location.Lat, info.Location.Lon),
-		Org:      info.Org.Name,
+		Org:      info.ASN.Name,
 		Timezone: info.Timezone,
 	}, nil
 }
